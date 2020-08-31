@@ -32,6 +32,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from deeplabcut.generate_training_dataset import auxfun_drag_label
 from deeplabcut.utils import auxiliaryfunctions
 
+# Backup previous save
+from sys import platform
+
 # ###########################################################################
 # Class for GUI MainFrame
 # ###########################################################################
@@ -577,6 +580,17 @@ class MainFrame(wx.Frame):
                 os.path.join(self.dir, "CollectedData_" + self.scorer + ".h5"),
                 "df_with_missing",
             )
+            if platform == 'linux' or platform == 'linux2':
+                self.dataFrame.index = self.dataFrame.index.str.replace('\\','/')
+            elif platform == "win32":
+                self.dataFrame.index = self.dataFrame.index.str.replace('/','\\')
+            elif platform == 'darwin':
+                try:
+                    self.dataFrame.index = self.dataFrame.index.str.replace('\\','/')
+                except:
+                    print(" Unexpected os.rename behaviour, try win32 approach")
+
+
             self.dataFrame.sort_index(inplace=True)
             self.prev.Enable(True)
 
@@ -902,7 +916,6 @@ class MainFrame(wx.Frame):
         """
 
         # Backup previous save
-        from sys import platform
 
         csv_path = os.path.join(self.dir, "CollectedData_" + self.scorer + ".csv") 
         hdf_path = os.path.join(self.dir, "CollectedData_" + self.scorer + ".h5")
