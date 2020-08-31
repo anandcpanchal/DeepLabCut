@@ -354,6 +354,7 @@ class Create_training_dataset(wx.Panel):
         """
         num_shuffles = self.shuffle.GetValue()
         config_file = auxiliaryfunctions.read_config(self.config)
+        auxiliaryfunctions.unify_path( config_file['project_path'])
         trainindex = self.trainingindex.GetValue()
 
         if self.userfeedback.GetStringSelection() == "Yes":

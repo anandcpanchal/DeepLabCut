@@ -764,3 +764,50 @@ def load_detection_data(video, scorer, track_method):
             f"scorer {scorer}, and tracker {track_method}"
         )
     return read_pickle(filepath)
+
+def unify_path( project_path):
+    # Unify path seperators as per platform in all hdf5 files
+    from sys import platform
+
+    csv_path = None 
+    hdf_path = None
+
+    """ Get list of immediate subdirectories """
+    project_path = os.path.join( project_path, 'labeled-data')
+    folders = get_immediate_subdirectories( project_path)
+    
+    for folder in folders:
+        filenames = list(grab_files_in_folder( os.path.join(project_path, folder), ext="h5", relative=True))
+        for filename in filenames:
+            hdf_path = os.path.join( project_path, folder, filename)
+            csv_path = hdf_path.replace('.h5','.csv')
+
+            dataFrame = pd.read_hdf(
+                        hdf_path,
+                        "df_with_missing",
+                    )
+            if platform == 'linux' or platform == 'linux2':
+                dataFrame.index = dataFrame.index.str.replace('\\','/')
+            elif platform == "win32":
+                dataFrame.index = dataFrame.index.str.replace('/','\\')
+            elif platform == 'darwin':
+                try:
+                    dataFrame.index = dataFrame.index.str.replace('\\','/')
+                except:
+                    print(" Unexpected os.rename behaviour, try win32 approach")
+
+            # Drop Nan data frames
+            dataFrame = dataFrame.dropna(how='all') 
+            
+            # Windows compatible
+            dataFrame.sort_index(inplace=True)
+            
+            dataFrame.to_csv(
+                csv_path
+            )
+            dataFrame.to_hdf(
+                hdf_path,
+                "df_with_missing",
+                format="table",
+                mode="w",
+            )
