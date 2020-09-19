@@ -9,6 +9,9 @@ import deeplabcut
 
 # Output CSV postprocessing
 import pandas as pd
+import numpy as np
+from scipy.ndimage import gaussian_filter1d
+
 
 # Input Processing
 argparser = arg.ArgumentParser(description="Process video repetition count with DeepLabCut")
