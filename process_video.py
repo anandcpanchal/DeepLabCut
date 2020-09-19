@@ -128,7 +128,8 @@ counter_data_dict = {}
 for key in polar_keys:
     counter_data_dict[key] = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
 
-print( counter_data_dict )
+for key_ in counter_data_dict.keys():
+	print( key_ , '	:	', counter_data_dict[ key_ ] )
 
 if args.output_video:
 	deeplabcut.create_labeled_video( args.config, [ args.video_path ], videotype= extension_, draw_skeleton=True)
