@@ -48,7 +48,7 @@ csv_columns = csv_result.columns.tolist()[1:] # extracting column names
 # Convert results to dict
 def init_result_dict( columns_ia):
     result_dict_oa = {}
-    for column_ in columns_ioa:
+    for column_ in columns_ia:
         result_dict_oa[ column_ ] = list()
     return result_dict_oa
 
