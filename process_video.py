@@ -55,7 +55,7 @@ def init_result_dict( columns_ia):
 csv_result_dict = init_result_dict( csv_columns )
 
 for column_ in csv_columns:
-    csv_result_dict[ column_ ] = csv_result_dict[ column_ ].tolist()
+    csv_result_dict[ column_ ] = csv_result[ column_ ].tolist()
 
 # Convert coordinates list to numpy array
 for key_ in csv_result_dict.keys():
