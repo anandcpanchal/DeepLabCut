@@ -17,6 +17,7 @@ from scipy.ndimage import gaussian_filter1d
 argparser = arg.ArgumentParser(description="Process video repetition count with DeepLabCut")
 argparser.add_argument('-c', dest="config",help="config_yaml_path", required=True)
 argparser.add_argument('-i', dest="video_path",help="path to the video file", required=True)
+argparser.add_argument('-o', dest="output_video",help="output video file", default=True)
 args = argparser.parse_args()
 
 path_, extension_ = os.path.splitext( args.video_path)
@@ -128,3 +129,6 @@ for key in polar_keys:
     counter_data_dict[key] = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
 
 print( counter_data_dict )
+
+if args.output_video:
+	deeplabcut.create_labeled_video( args.config, [ args.video_path ], videotype= extension_, draw_skeleton=True)
