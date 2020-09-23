@@ -147,7 +147,8 @@ if args.joints:
     # Joint Angle Analysis
     joints = Joints( args.joints )
     joint_dict = joints.get_joints_dictionary()
-
+    print("Joint to analyze : ")
+    print( joint_dict )
     coord_dict = {}
     for key in joint_dict.keys():
         coord_dict[key] = {}
