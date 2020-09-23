@@ -142,7 +142,7 @@ if args.output_video:
 
 # Joint Angle Analysis
 if args.joints:
-    path = csv_result
+    path = o_result_path
 
     # Joint Angle Analysis
     joints = Joints( args.joints )

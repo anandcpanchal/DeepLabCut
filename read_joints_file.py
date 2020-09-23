@@ -8,7 +8,9 @@ class Joints:
 		joint_file = open( self.file, 'r')
 		lines = joint_file.readlines()
 		for i,line in enumerate(lines):
-			joint_dict[i] = line.replace('\n','').split(',')
+			line = line.replace('\n','').split(',')
+			if len(line) == 3:
+				joint_dict[i] = line 
 		return joint_dict
 
 if __name__== "__main__":
