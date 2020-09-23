@@ -7,10 +7,11 @@ class Joints:
 		joint_dict = {}
 		joint_file = open( self.file, 'r')
 		lines = joint_file.readlines()
-		for i,line in enumerate(lines):
+		for line in lines:
 			line = line.replace('\n','').split(',')
+			key = '-'.join(line)
 			if len(line) == 3:
-				joint_dict[i] = line 
+				joint_dict[key] = line 
 		return joint_dict
 
 if __name__== "__main__":
