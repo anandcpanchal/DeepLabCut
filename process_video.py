@@ -12,12 +12,16 @@ import pandas as pd
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 
+# angle processing
+from geometry import Geometry 
+import json
 
 # Input Processing
 argparser = arg.ArgumentParser(description="Process video repetition count with DeepLabCut")
 argparser.add_argument('-c', dest="config",help="config_yaml_path", required=True)
 argparser.add_argument('-i', dest="video_path",help="path to the video file", required=True)
 argparser.add_argument('-o', dest="output_video",help="output video file", default=True)
+argparser.add_argument('-a', dest="analysis",help="output angle analysis file", default=True)
 args = argparser.parse_args()
 
 path_, extension_ = os.path.splitext( args.video_path)
@@ -133,3 +137,40 @@ for key_ in counter_data_dict.keys():
 
 if args.output_video:
 	deeplabcut.create_labeled_video( args.config, [ args.video_path ], videotype= extension_, draw_skeleton=True)
+
+
+# Joint Angle Analysis
+if args.analysis == True:
+    path = csv_result
+
+    # Joint Angle Analysis
+    joint_dict = {}
+    joint_dict['J1'] = ['hip1','knee1','ankle1']
+    joint_dict['J2'] = ['hip2','knee2','ankle2']
+    joint_dict['J3'] = ['shoulder1','elbow1','wrist1']
+    joint_dict['J4'] = ['shoulder2','elbow2','wrist2']
+
+
+    coord_dict = {}
+    for key in joint_dict.keys():
+        coord_dict[key] = {}
+        for item in joint_dict[key]:
+            coord_dict[key][item] = {}
+            for i,value in enumerate(csv_result_dict[ item+'_x']):
+                coord_dict[key][item][i] = (csv_result_dict[ item+'_x'][i], csv_result_dict[ item+'_y'][i])
+
+
+    angle_dict = {}
+    angle = Geometry()
+
+    for key in coord_dict.keys():
+        angle_dict[key] = {}
+        joints = list(coord_dict[key].keys())
+        for i,_ in enumerate(coord_dict[key][joints[0]].keys()):
+            p1 = angle.Point( coord_dict[key][joints[0]][i][0], coord_dict[key][joints[0]][i][1] )
+            p2 = angle.Point( coord_dict[key][joints[1]][i][0], coord_dict[key][joints[1]][i][1] )
+            p3 = angle.Point( coord_dict[key][joints[2]][i][0], coord_dict[key][joints[2]][i][1] )
+            angle_dict[key][i] = angle.get_angles(p1,p2,p3)
+    
+    with open( path.replace('.csv','.json'),'w') as out_file:
+        json.dump( angle_dict, out_file) 
