@@ -168,7 +168,7 @@ if args.joints:
             p1 = angle.Point( coord_dict[key][joints[0]][i][0], coord_dict[key][joints[0]][i][1] )
             p2 = angle.Point( coord_dict[key][joints[1]][i][0], coord_dict[key][joints[1]][i][1] )
             p3 = angle.Point( coord_dict[key][joints[2]][i][0], coord_dict[key][joints[2]][i][1] )
-            angle_dict[key][i] = angle.get_angles(p1,p2,p3)
+            angle_dict[key][i] = angle.get_angles(p1,p2,p3)[1] # Saving only central angle
     
     with open( path.replace('.csv','.json'),'w') as out_file:
         json.dump( angle_dict, out_file) 
