@@ -14,6 +14,7 @@ from scipy.ndimage import gaussian_filter1d
 
 # angle processing
 from geometry import Geometry 
+from read_joints_file import Joints
 import json
 
 # Input Processing
@@ -21,7 +22,7 @@ argparser = arg.ArgumentParser(description="Process video repetition count with 
 argparser.add_argument('-c', dest="config",help="config_yaml_path", required=True)
 argparser.add_argument('-i', dest="video_path",help="path to the video file", required=True)
 argparser.add_argument('-o', dest="output_video",help="output video file", default=True)
-argparser.add_argument('-a', dest="analysis",help="output angle analysis file", default=True)
+argparser.add_argument('-j', dest="joints",help="joint list file", default=None)
 args = argparser.parse_args()
 
 path_, extension_ = os.path.splitext( args.video_path)
@@ -140,16 +141,12 @@ if args.output_video:
 
 
 # Joint Angle Analysis
-if args.analysis == True:
+if args.joints:
     path = csv_result
 
     # Joint Angle Analysis
-    joint_dict = {}
-    joint_dict['J1'] = ['hip1','knee1','ankle1']
-    joint_dict['J2'] = ['hip2','knee2','ankle2']
-    joint_dict['J3'] = ['shoulder1','elbow1','wrist1']
-    joint_dict['J4'] = ['shoulder2','elbow2','wrist2']
-
+    joints = Joints( args.joints )
+    joint_dict = joints.get_joints_dictionary()
 
     coord_dict = {}
     for key in joint_dict.keys():
