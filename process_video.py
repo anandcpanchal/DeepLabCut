@@ -15,6 +15,7 @@ from scipy.ndimage import gaussian_filter1d
 # angle processing
 from geometry import Geometry 
 from read_joints_file import Joints
+from plot_joint_angle_json import plot_joints
 import json
 
 # Input Processing
@@ -170,5 +171,8 @@ if args.joints:
             p3 = angle.Point( coord_dict[key][joints[2]][i][0], coord_dict[key][joints[2]][i][1] )
             angle_dict[key].append( angle.get_angles(p1,p2,p3)[1]) # Saving only central angle
     
-    with open( path.replace('.csv','.json'),'w') as out_file:
+    joint_json_path = path.replace('.csv','.json')
+    with open( joint_json_path,'w') as out_file:
         json.dump( angle_dict, out_file) 
+
+    plot_joints( joint_json_path )
