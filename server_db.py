@@ -3,15 +3,16 @@ import os
 
 class ServerDB:
 
-	def __init__( self, db_path_ia, debug=True):
+	def __init__( self, db_path_ia, table_name_ia, debug=True):
 		self.debug = debug
 		self.path = db_path_ia
+		self.table = table_name_ia
 		self.db_present = self.check_for_db_presence()
 		if not self.db_present:
 			self.db_init()
-		else:
-			self.db = sqlite.connect( self.path)
-			self.cursor = self.db.cursor()
+		
+		self.db = sqlite.connect( self.path)
+		self.cursor = self.db.cursor()
 
 	def __del__(self):
 		self.cursor.close()
@@ -23,7 +24,6 @@ class ServerDB:
 		if self.debug:
 			print(" DB Presence : ", db_presence)
 		return db_presence
-
 
 	def db_init(self):
 		head_, tail_ = os.path.split( self.path)
@@ -39,11 +39,19 @@ class ServerDB:
 
 	def init_table( self, connection_ia):
 		cursor_ = connection_ia.cursor()
-		make_table = "CREATE TABLE RECORD(ID INT PRIMARY KEY,VIDEO CHAR(256),METADATA CHAR(1024))"
+		make_table = "CREATE TABLE " + self.table + " (ID INT PRIMARY KEY,VIDEO CHAR(256),METADATA CHAR(1024), PROCESSED INT, PUBLISHED INT)"
 		cursor_.execute( make_table)
 		cursor_.close()
 		connection_ia.commit()
 
+	def get_table_name(self):
+		return self.table
+
+	def insert_record( self, record_ia):
+		command_ = "INSERT INTO " + self.table + " values ( ? , ?, ?, ?, ?)"
+		self.cursor.execute( command_, ( record_ia["id"], record_ia["video"], str(record_ia["metadata"]), str(record_ia["processed"]), str(record_ia["published"])))
+		self.db.commit()
+
 if __name__=="__main__":
 	db_path = '/home/anand/Music/DeepLabCut/test.sqlite3'
-	db = ServerDB( db_path)
+	db = ServerDB( db_path, 'RECORD')
