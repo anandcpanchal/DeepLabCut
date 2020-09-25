@@ -52,6 +52,34 @@ class ServerDB:
 		self.cursor.execute( command_, ( record_ia["id"], record_ia["video"], str(record_ia["metadata"]), str(record_ia["processed"]), str(record_ia["published"])))
 		self.db.commit()
 
+	def get_unprocessed_record(self):
+		command_ = "SELECT * from record where PROCESSED is 0"
+		self.cursor.execute( command_)
+		data_ = self.cursor.fetchone()
+		data_dict_o = {}
+		if data_:
+			data_dict_o["id"] = data_[0]
+			data_dict_o["video"] = data_[1]
+			data_dict_o["metadata"] = data_[2]
+			data_dict_o["processed"] = data_[3]
+			data_dict_o["published"] = data_[4]
+			return data_dict_o
+		else:
+			return data_dict_o
+	
+	def update_processed_flag( self, id_ia, value_ia):
+		command_ = "UPDATE " + self.table + " SET PROCESSED = " + str( value_ia) + " WHERE id = " + str( id_ia)
+		self.cursor.execute(command_)
+		self.db.commit()
+
+	def update_published_flag( self, id_ia, value_ia):
+		command_ = "UPDATE " + self.table + " SET PUBLISHED = " + str( value_ia) + " WHERE id = " + str( id_ia)
+		self.cursor.execute(command_)
+		self.db.commit()
+
 if __name__=="__main__":
 	db_path = '/home/anand/Music/DeepLabCut/test.sqlite3'
 	db = ServerDB( db_path, 'RECORD')
+	print(db.get_unprocessed_record())
+	print(db.update_processed_flag(1234, 1))
+	print(db.update_published_flag(1234, 1))
