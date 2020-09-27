@@ -49,8 +49,11 @@ class ServerDB:
 
 	def insert_record( self, record_ia):
 		command_ = "INSERT INTO " + self.table + " values ( ? , ?, ?, ?, ?)"
-		self.cursor.execute( command_, ( record_ia["id"], record_ia["video"], str(record_ia["metadata"]), str(record_ia["processed"]), str(record_ia["published"])))
-		self.db.commit()
+		try:
+			self.cursor.execute( command_, ( record_ia["id"], record_ia["video"], str(record_ia["metadata"]), str(record_ia["processed"]), str(record_ia["published"])))
+			self.db.commit()
+		except sqlite.IntegrityError:
+			raise 
 
 	def get_unprocessed_record(self):
 		command_ = "SELECT * from record where PROCESSED is 0"
