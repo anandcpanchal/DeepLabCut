@@ -197,5 +197,6 @@ if __name__ == "__main__":
     argparser.add_argument('-j', dest="joints",help="joint list file", default=None)
     args = argparser.parse_args()
 
-    output = process_video( args.config, args.video_path, args.joints, args.output_video)
-    print( output )
+    output_dict = process_video( args.config, args.video_path, args.joints, args.output_video)
+    for key in output_dict.keys():
+        print( key, " : ", output_dict[key])
