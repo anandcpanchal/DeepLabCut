@@ -1,0 +1,5 @@
+{
+	"inference_config" : "testpath",
+	"db_path" : "/home/anand/Music/DeepLabCut/test.sqlite3",
+	"output_video_boolean_flag" : 1
+}

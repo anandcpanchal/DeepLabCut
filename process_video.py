@@ -4,6 +4,7 @@ import pdb
 import os
 import argparse as arg
 import time
+import json
 
 # Deeplabcut
 import deeplabcut
@@ -17,7 +18,6 @@ from scipy.ndimage import gaussian_filter1d
 from geometry import Geometry 
 from read_joints_file import Joints
 from plot_joint_angle_json import plot_joints
-import json
 
 
 # Preprocess result
@@ -83,7 +83,7 @@ def count_data( filter_data_ia ):
 
 
 
-def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_video_bool_ia=False):
+def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_bool_ia=False):
     process_output_dict = {}
     process_output_dict["video_path"] = video_path_ia
     start_time_ = time.time()
@@ -147,14 +147,23 @@ def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_vi
     	process_output_dict['labeled_video_path'] = path_  + process_output_dict["dlc_scorer"] + '_labeled.mp4'
 
     # Joint Angle Analysis
-    if joints_info_path_ia:
+    if joints_info_ia:
         path = o_result_path
 
         # Joint Angle Analysis
-        joints = Joints( joints_info_path_ia )
+        '''
+        joints = Joints( joints_info_ia )
         joint_dict = joints.get_joints_dictionary()
         print("Joint to analyze : ")
         print( joint_dict )
+        '''
+        
+        metadata = joints_info_ia.replace('\'','\"')
+        metadata = json.loads( metadata )
+        joint_dict = metadata['angle_list']
+        print("Joint to analyze : ")
+        print( joint_dict )
+
         coord_dict = {}
         for key in joint_dict.keys():
             coord_dict[key] = {}
