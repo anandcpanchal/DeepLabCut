@@ -46,6 +46,7 @@ if __name__ == "__main__":
 		if process.debug: print("Fetching record from db")
 		record = process.get_record_for_processing()	
 		if record:
+			process.db.
 			process.db.update_processed_flag( record["id"], 1)
 			record["processed"] = 1
 			if process.debug: print("Processing : ", record)
