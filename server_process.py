@@ -51,6 +51,8 @@ if __name__ == "__main__":
     argparser.add_argument('-c', dest="config", default="./inference_config.json", help="config_json_path", required=True)
     args = argparser.parse_args()
 
+    wait_counter = 0
+
     inference_config_file = open( args.config )
     config = json.load( inference_config_file )
     db_path = config['db_path']
@@ -59,6 +61,7 @@ if __name__ == "__main__":
     	if process.debug: print("Fetching record from db")
     	record = process.get_record_for_processing()	
     	if record:
+    		wait_counter = 0
     		metadata = record['metadata']
     		output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
     		if process.debug: 
@@ -74,6 +77,7 @@ if __name__ == "__main__":
     			record["published"] = 1
     			if process.debug: print("Published : ", record)
     	else:
-    		if process.debug: print("No pending record found, sleeping for 10 sec")    		
+    		wait_counter += 1
+    		if process.debug: print(str( wait_counter) ," >> No pending record found, sleeping for 10 sec")    		
     		process.wait(10)
     		pass
