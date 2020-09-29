@@ -1,0 +1,12 @@
+{
+	"id" : "1",
+	"video" : "/home/paperspace/Videos/full-human-gcn-acp-2020-08-26/videos/leg-lift-42901.mp4",
+	"metadata" : {	
+					"record_position" : "front",
+					"exercise_name" : "test_exercise",
+					"angle_list" : { "1" : ["right_asis","right_knee","right_ankle"],
+									"2" : ["left_asis","left_knee","left_ankle"]},
+					"primary_organ" : "left_knee",
+					"secondary_organ" : "right_knee"
+				}
+}
