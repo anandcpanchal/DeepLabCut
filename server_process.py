@@ -63,9 +63,13 @@ if __name__ == "__main__":
 			output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
 			
 			if output:
+				metadata = json.loads( metadata.replace('\'','\"') ) # convert metadata string to dictionary
+
 				process.db.update_processed_flag( record["id"], 1)
 				record["processed"] = 1
 				if process.debug: print("Processing : ", record)
+				
+				process.db.update_result( record['id'], output['counter_data'][ metadata['primary_organ']], output['counter_data'][ metadata['secondary_organ']])
 				
 				process.db.update_published_flag( record["id"], 1)
 				record["published"] = 1
