@@ -94,7 +94,7 @@ def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_vi
     try:
     	o_DLCScorer = deeplabcut.analyze_videos( config_file_ia, [ video_path_ia ], videotype= extension_, save_as_csv= True)
     	o_result_path = path_ + o_DLCScorer + '.csv'
-
+        
         process_output_dict["dlc_scorer"] = o_DLCScorer
     	process_output_dict["csv_result_path"] = o_result_path
 
@@ -185,6 +185,8 @@ def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_vi
         plot_joints( joint_json_path )
         process_output_dict['joints_json_path'] = joint_json_path
 
+    end_time_ = time.time()
+    process_output_dict["processing_time"] = end_time_ - start_time_
     return process_output_dict
 
 
