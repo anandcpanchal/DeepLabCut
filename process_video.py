@@ -94,11 +94,9 @@ def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_vi
     try:
     	o_DLCScorer = deeplabcut.analyze_videos( config_file_ia, [ video_path_ia ], videotype= extension_, save_as_csv= True)
     	o_result_path = path_ + o_DLCScorer + '.csv'
-        
-        process_output_dict["dlc_scorer"] = o_DLCScorer
+    	process_output_dict["dlc_scorer"] = o_DLCScorer
     	process_output_dict["csv_result_path"] = o_result_path
-
-        print("Result path : ",  o_result_path)
+    	print("Result path : ",  o_result_path)
     except:
     	print(" DeepLabCut Inference Failed - Exiting ")
     	exit()
@@ -146,7 +144,7 @@ def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_vi
     # output labeled video
     if output_video_bool_ia:
     	deeplabcut.create_labeled_video( config_file_ia, [ video_path_ia ], videotype= extension_, draw_skeleton=True)
-        process_output_dict['labeled_video_path'] = path_  + process_output_dict["dlc_scorer"] + '_labeled.mp4'
+    	process_output_dict['labeled_video_path'] = path_  + process_output_dict["dlc_scorer"] + '_labeled.mp4'
 
     # Joint Angle Analysis
     if joints_info_path_ia:
