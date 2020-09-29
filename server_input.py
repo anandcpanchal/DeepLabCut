@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
 	# Init DB
 	PORT = 3000
-	db_path = "/home/anand/Music/DeepLabCut/test.sqlite3"
+	db_path = "/home/paperspace/inference/DeepLabCut/test_db.sqlite3"
 	db = ServerDB( db_path, "RECORD")
 	print(" Initiating on Port : ", PORT)
 	app = make_app()

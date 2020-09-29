@@ -1,5 +1,5 @@
 {
-	"inference_config" : "testpath",
-	"db_path" : "/home/anand/Music/DeepLabCut/test.sqlite3",
+	"inference_config" : "/home/paperspace/Videos/full-human-gcn-acp-2020-08-26/config.yaml",
+	"db_path" : "/home/paperspace/inference/DeepLabCut/test_db.sqlite3",
 	"output_video_boolean_flag" : 1
 }
