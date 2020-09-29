@@ -83,7 +83,7 @@ def count_data( filter_data_ia ):
 
 
 
-def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_video_bool_ia=False)
+def process_video( config_file_ia, video_path_ia, joints_info_path_ia, output_video_bool_ia=False):
     process_output_dict = {}
     process_output_dict["video_path"] = video_path_ia
     start_time_ = time.time()
