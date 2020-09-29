@@ -15,6 +15,7 @@ class InferenceHandler (RequestHandler):
 			data["processed"] = 0
 			data["published"] = 0
 			try:
+				print(" Adding link to the db : ", link_)
 				db.insert_record( data )
 				self.write( data)
 			except:
