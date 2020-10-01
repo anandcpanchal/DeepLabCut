@@ -75,11 +75,17 @@ def intersects( seg1, seg2):
 def count_data( filter_data_ia ):
     ref_line = ( ( 0,filter_data_ia.mean() ), ( filter_data_ia.shape[0],filter_data_ia.mean()) )
     result = []
+    count_switch_frame_list_o = []
     for i,point in enumerate( filter_data_ia ):
         if i < len( filter_data_ia )-1:
             segment = ( (i,filter_data_ia[i]),((i+1,filter_data_ia[i+1])) )
             result.append( intersects(ref_line, segment) )
-    return int( result.count(True) / 2 )
+
+            # Count switch frames
+            if result[-1] == False and result[-2] == True:
+                count_switch_frame_list_o.append(i)
+
+    return int( result.count(True) / 2 ), count_switch_frame_list_o
 
 
 
@@ -133,8 +139,9 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 
     counter_data_dict = {}
     for key in polar_keys:
-        counter_data_dict[key] = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
+        counter_data_dict[key], count_switch_frames = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
 
+    print(" Count changes at frames ", count_switch_frames)
     process_output_dict['counter_data'] = counter_data_dict
 
     # printing counter
