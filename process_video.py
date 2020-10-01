@@ -189,7 +189,7 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
         with open( joint_json_path,'w') as out_file:
             json.dump( angle_dict, out_file) 
 
-        plot_joints( joint_json_path )
+        # plot_joints( joint_json_path )
         process_output_dict['joints_json_path'] = joint_json_path
 
     end_time_ = time.time()
