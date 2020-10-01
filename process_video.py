@@ -82,8 +82,9 @@ def count_data( filter_data_ia ):
             result.append( intersects(ref_line, segment) )
 
             # Count switch frames
-            if result[-1] == False and result[-2] == True:
-                count_switch_frame_list_o.append(i)
+            if len(result) > 1:
+                if result[-1] == False and result[-2] == True:
+                    count_switch_frame_list_o.append(i)
 
     return int( result.count(True) / 2 ), count_switch_frame_list_o
 
