@@ -140,9 +140,8 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 
     counter_data_dict = {}
     for key in polar_keys:
-        counter_data_dict[key], count_switch_frames = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
+        counter_data_dict[key], counter_data_dict[ key + "_count_switch@frame"] = count_data(gaussian_filter1d( polar_result_dict[key][MAGNITUDE],7))
 
-    print(" Count changes at frames ", count_switch_frames)
     process_output_dict['counter_data'] = counter_data_dict
 
     # printing counter
