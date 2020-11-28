@@ -71,7 +71,7 @@ if __name__ == "__main__":
 				video_name = record['video'].split("/")[-1]
 				print("Fetching : ", video_name)
 				wget.download(record['video'], temp_video_storage_path + video_name)
-				record['video'] = temp_video_storage_path + video_name
+				record['video'] = os.path.abspath(temp_video_storage_path + video_name)
 			except:
 				print("Error fetching content")
 				import pdb
