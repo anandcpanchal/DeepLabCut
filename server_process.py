@@ -73,6 +73,8 @@ if __name__ == "__main__":
 				record['video'] = temp_video_storage_path + video_name
 			except:
 				print("Error fetching content")
+				import pdb
+				pdb.set_trace()
 				exit()
 
 			output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
