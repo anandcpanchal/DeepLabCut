@@ -83,6 +83,7 @@ if __name__ == "__main__":
 				for key in output.keys():
 					print( key, " : ", output[key])
 			if output:
+				os.remove( record['video']) #Delete downloaded file
 				metadata = json.loads( metadata.replace('\'','\"') )# convert metadata string to dictionary
 				process.db.update_processed_flag( record["id"], 1)
 				record["processed"] = 1
