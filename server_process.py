@@ -65,17 +65,17 @@ if __name__ == "__main__":
 			wait_counter = 0
 			metadata = record['metadata']
 			try:
-				import pdb
-				pdb.set_trace()
 				temp_video_storage_path = './input/'
 				if not os.path.exists( temp_video_storage_path):
 					os.mkdir( temp_video_storage_path)
 				video_name = record['video'].split("/")[-1]
-				print("Fetching : ", video_path)
+				print("Fetching : ", video_name)
 				wget.download(record['video'], temp_video_storage_path + video_name)
 				record['video'] = temp_video_storage_path + video_name
 			except:
 				print("Error fetching content")
+				import pdb
+				pdb.set_trace()
 				exit()
 
 			output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
