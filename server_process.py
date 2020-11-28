@@ -5,7 +5,7 @@ import argparse as arg
 import time
 import sys
 import json
-
+import wget
 
 class ServerProcess:
 
@@ -63,6 +63,18 @@ if __name__ == "__main__":
     	if record:
     		wait_counter = 0
     		metadata = record['metadata']
+			try:
+				temp_video_storage_path = './input/'
+				if not os.path.exists( temp_video_storage_path):
+					os.mkdir( temp_video_storage_path)
+				video_name = record['video'].split("/")[-1]
+				print("Fetching : ", video_path)
+				wget.download(record['video'], temp_video_storage_path + video_name)
+				record['video'] = temp_video_storage_path + video_name
+			except:
+				print("Error fetching content")
+				exit()
+
     		output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
     		if process.debug: 
     			for key in output.keys():
