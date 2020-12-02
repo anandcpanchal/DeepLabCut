@@ -30,10 +30,11 @@ def make_app():
 if __name__ == '__main__':
 
 	# Init DB
+	ADDRESS = '0.0.0.0'
 	PORT = 3000
 	db_path = "/home/paperspace/inference/DeepLabCut/test_db.sqlite3"
 	db = ServerDB( db_path, "RECORD")
 	print(" Initiating on Port : ", PORT)
 	app = make_app()
-	app.listen(PORT)
+	app.listen(PORT, ADDRESS)
 	IOLoop.instance().start()
