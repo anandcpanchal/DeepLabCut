@@ -81,12 +81,12 @@ class ServerDB:
 			raise 
 
 	def update_processed_flag( self, id_ia, value_ia):
-		command_ = "UPDATE " + self.table + " SET PROCESSED = " + str( value_ia) + " WHERE id = " + str( id_ia) + "\""
+		command_ = "UPDATE " + self.table + " SET PROCESSED = " + str( value_ia) + " WHERE id = " + id_ia + "\""
 		self.cursor.execute(command_)
 		self.db.commit()
 
 	def update_published_flag( self, id_ia, value_ia):
-		command_ = "UPDATE " + self.table + " SET PUBLISHED = " + str( value_ia) + " WHERE id = " + str( id_ia) + "\""
+		command_ = "UPDATE " + self.table + " SET PUBLISHED = " + str( value_ia) + " WHERE id = " + id_ia + "\""
 		self.cursor.execute(command_)
 		self.db.commit()
 
