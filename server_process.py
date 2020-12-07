@@ -1,5 +1,6 @@
 from server_db import ServerDB
 from process_video import process_video
+from aws_uploader import AWS_Uploader
 
 import argparse as arg
 import time
@@ -65,7 +66,7 @@ if __name__ == "__main__":
 			wait_counter = 0
 			metadata = record['metadata']
 			try:
-				temp_video_storage_path = './input/'
+				temp_video_storage_path = './input/' + str(record['id'])
 				if not os.path.exists( temp_video_storage_path):
 					os.mkdir( temp_video_storage_path)
 				video_name = record['video'].split("/")[-1]
@@ -90,6 +91,16 @@ if __name__ == "__main__":
 				if process.debug: print("Processing : ", record)
 				process.db.update_result( record['id'], output['counter_data'][ metadata['primary_organ']], output['counter_data'][ metadata['secondary_organ']])
 				process.db.update_published_flag( record["id"], 1)
+
+				# Upload output analysis files
+				instance = AWS_Uploader(bucket='phy-exercise-analysis')
+				try:
+					for file in os.listdir(temp_video_storage_path):
+						instance.upload_file(filename=file, id=str(record['id']))
+				except:
+					print("Error Uploading results")
+					exit()
+				# End: Upload output analysis files
 				record["published"] = 1
 				if process.debug: print("Published : ", record)
 		else:
