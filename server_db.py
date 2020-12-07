@@ -27,7 +27,7 @@ class ServerDB:
 	
 	def init_record_table( self, connection_ia):
 		cursor_ = connection_ia.cursor()
-		make_table = "CREATE TABLE " + self.table + " (ITEM INT AUTO_INCREMENT PRIMARY KEY UNIQUE, ID CHAR(256) UNIQUE, VIDEO CHAR(256),METADATA CHAR(1024), PROCESSED INT, PUBLISHED INT, PRIMARY_COUNT INT, SECONDARY_COUNT INT)"
+		make_table = "CREATE TABLE " + self.table + " (ITEM INT NOT NULL AUTO_INCREMENT PRIMARY KEY UNIQUE, ID CHAR(256) UNIQUE, VIDEO CHAR(256),METADATA CHAR(1024), PROCESSED INT, PUBLISHED INT, PRIMARY_COUNT INT, SECONDARY_COUNT INT)"
 		cursor_.execute( make_table)
 		cursor_.close()
 		connection_ia.commit()
