@@ -66,7 +66,7 @@ if __name__ == "__main__":
 			wait_counter = 0
 			metadata = record['metadata']
 			try:
-				temp_video_storage_path = './input/' + str(record['id'])
+				temp_video_storage_path = './input/' + str(record['id'] + '/')
 				if not os.path.exists( temp_video_storage_path):
 					os.mkdir( temp_video_storage_path)
 				video_name = record['video'].split("/")[-1]
