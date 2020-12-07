@@ -150,8 +150,6 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 
 	# output labeled video
 	if output_video_bool_ia:
-		import pdb
-		pdb.set_trace()
 		deeplabcut.create_labeled_video( config_file_ia, [ video_path_ia ], videotype= extension_, draw_skeleton=True)
 		process_output_dict['labeled_video_path'] = path_  + process_output_dict["dlc_scorer"] + '_labeled.mp4'
 

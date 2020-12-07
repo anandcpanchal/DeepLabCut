@@ -27,7 +27,7 @@ class ServerDB:
 	
 	def init_record_table( self, connection_ia):
 		cursor_ = connection_ia.cursor()
-		make_table = "CREATE TABLE " + self.table + " (ID INT PRIMARY KEY,VIDEO CHAR(256),METADATA CHAR(1024), PROCESSED INT, PUBLISHED INT, PRIMARY_COUNT INT, SECONDARY_COUNT INT)"
+		make_table = "CREATE TABLE " + self.table + " (ITEM INT AUTO_INCREMENT PRIMARY KEY UNIQUE, ID CHAR(256) UNIQUE, VIDEO CHAR(256),METADATA CHAR(1024), PROCESSED INT, PUBLISHED INT, PRIMARY_COUNT INT, SECONDARY_COUNT INT)"
 		cursor_.execute( make_table)
 		cursor_.close()
 		connection_ia.commit()
@@ -49,7 +49,7 @@ class ServerDB:
 		return self.table
 
 	def insert_record( self, record_ia):
-		command_ = "INSERT INTO " + self.table + " values ( ?, ?, ?, ?, ?, ?, ?)"
+		command_ = "INSERT INTO " + self.table + "(ID, VIDEO, METADATA, PROCESSED, PUBLISHED, PRIMARY_COUNT, SECONDARY_COUNT) values ( ?, ?, ?, ?, ?, ?, ?)"
 		try:
 			self.cursor.execute( command_, ( record_ia["id"], record_ia["video"], str(record_ia["metadata"]), str(record_ia["processed"]), str(record_ia["published"]), '0', '0'))
 			self.db.commit()
