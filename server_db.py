@@ -73,7 +73,7 @@ class ServerDB:
 			return data_dict_o
 	
 	def update_result( self, id_ia, primary_count_ia, secondary_count_ia):
-		command_ = "UPDATE " + self.table + " SET PRIMARY_COUNT = " + str( primary_count_ia) + ", SECONDARY_COUNT = " + str( secondary_count_ia) + " WHERE ID = " + str(id_ia)
+		command_ = "UPDATE " + self.table + " SET PRIMARY_COUNT = " + str( primary_count_ia) + ", SECONDARY_COUNT = " + str( secondary_count_ia) + " WHERE ID = " + "\"" + id_ia + "\""
 		try:
 			self.cursor.execute( command_)
 			self.db.commit()
