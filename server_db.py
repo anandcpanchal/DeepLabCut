@@ -62,11 +62,12 @@ class ServerDB:
 		data_ = self.cursor.fetchone()
 		data_dict_o = {}
 		if data_:
-			data_dict_o["id"] = data_[0]
-			data_dict_o["video"] = data_[1]
-			data_dict_o["metadata"] = data_[2]
-			data_dict_o["processed"] = data_[3]
-			data_dict_o["published"] = data_[4]
+			data_dict_o["item"] = data_[0]
+			data_dict_o["id"] = data_[1]
+			data_dict_o["video"] = data_[2]
+			data_dict_o["metadata"] = data_[3]
+			data_dict_o["processed"] = data_[4]
+			data_dict_o["published"] = data_[5]
 			return data_dict_o
 		else:
 			return data_dict_o
