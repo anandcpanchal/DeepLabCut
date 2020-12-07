@@ -93,8 +93,6 @@ if __name__ == "__main__":
 				process.db.update_published_flag( record["id"], 1)
 
 				# Upload output analysis files
-				import pdb
-				pdb.set_trace()
 				instance = AWS_Uploader(bucket='phy-exercise-analysis')
 				try:
 					for file in os.listdir(temp_video_storage_path):
