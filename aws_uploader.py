@@ -44,7 +44,7 @@ class AWS_Uploader:
             print(" Please Set bucket name ")
             return
         try:
-            filepath = str(id) + '/' + filename
+            filepath = str(id) + '/' + filename.split("/")[-1]
             self.s3.Bucket(self.bucket).upload_file(Filename=filename, Key=filepath,
                                                Callback= self.ProgressPercentage(filename))
         except ClientError:

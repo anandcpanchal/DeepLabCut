@@ -98,7 +98,7 @@ if __name__ == "__main__":
 				instance = AWS_Uploader(bucket='phy-exercise-analysis')
 				try:
 					for file in os.listdir(temp_video_storage_path):
-						filename = temp_video_storage_path + file
+						filename = os.path.abspath(temp_video_storage_path + file)
 						instance.upload_file(filename=filename, id=str(record['id']))
 				except:
 					print("Error Uploading results")
