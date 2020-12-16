@@ -135,8 +135,12 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 
 	polar_result_path = o_result_path.replace('.csv','_polar.json')
 	process_output_dict['polar_result_path'] = polar_result_path
-	with open(polar_result_path, 'w') as out_file:
-		json.dump(polar_result_dict, out_file)
+	try:
+		with open(polar_result_path, 'w') as out_file:
+			json.dump(polar_result_dict, out_file)
+	except:
+		import pdb
+		pdb.set_trace()
 
 	polar_keys = list( polar_result_dict.keys() )
 
