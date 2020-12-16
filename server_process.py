@@ -75,9 +75,10 @@ if __name__ == "__main__":
 				record['video'] = os.path.abspath(temp_video_storage_path + video_name)
 			except:
 				print("Error fetching content")
+				print(record)
+				self.db.delete_record_by_id(str(record['id']))
 				import pdb
 				pdb.set_trace()
-				print(record)
 				exit()
 
 			output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])

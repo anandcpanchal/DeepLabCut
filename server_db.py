@@ -92,6 +92,12 @@ class ServerDB:
 		self.cursor.execute(command_)
 		self.db.commit()
 
+	def delete_record_by_id(self, id_ia):
+		command_ = "DELETE FROM " +  self.table + " WHERE ID = " + id_ia
+		print("Executing : ", command_)
+		self.cursor.execute( command_)
+		self.db.commit()
+
 if __name__=="__main__":
 	db_path = '/home/anand/Music/DeepLabCut/test.sqlite3'
 	db = ServerDB( db_path, 'RECORD')
