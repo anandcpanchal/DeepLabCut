@@ -94,18 +94,20 @@ if __name__ == "__main__":
 				process.db.update_result( record['id'], output['counter_data'][ metadata['primary_organ']], output['counter_data'][ metadata['secondary_organ']])
 				process.db.update_published_flag( record["id"], 1)
 
-				# Upload output analysis files
-				instance = AWS_Uploader(bucket='phy-exercise-analysis')
-				try:
-					for file in os.listdir(temp_video_storage_path):
-						filename = os.path.abspath(temp_video_storage_path + file)
-						instance.upload_file(filename=filename, id=str(record['id']))
-				except:
-					print("Error Uploading results")
-					exit()
-				# End: Upload output analysis files
-				record["published"] = 1
-				if process.debug: print("Published : ", record)
+				if config['upload_output_boolean_flag']:
+					# Upload output analysis files
+					instance = AWS_Uploader(bucket='phy-exercise-analysis')
+					try:
+						for file in os.listdir(temp_video_storage_path):
+							filename = os.path.abspath(temp_video_storage_path + file)
+							instance.upload_file(filename=filename, id=str(record['id']))
+					except:
+						print("Error Uploading results")
+						exit()
+					# End: Upload output analysis files
+					record["published"] = 1
+					if process.debug: print("Published : ", record)
+
 		else:
 			wait_counter += 1
 			if process.debug: print(str( wait_counter) ," >> No pending record found, sleeping for 10 sec")    		
