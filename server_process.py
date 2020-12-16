@@ -76,7 +76,7 @@ if __name__ == "__main__":
 			except:
 				print("Error fetching content")
 				print(record)
-				self.db.delete_record_by_id(str(record['id']))
+				process.db.delete_record_by_id(str(record['id']))
 				import pdb
 				pdb.set_trace()
 				exit()
