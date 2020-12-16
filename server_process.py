@@ -77,6 +77,7 @@ if __name__ == "__main__":
 				print("Error fetching content")
 				import pdb
 				pdb.set_trace()
+				print(record)
 				exit()
 
 			output = process_video( config['inference_config'], record['video'], record['metadata'], config['output_video_boolean_flag'])
