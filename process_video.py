@@ -133,11 +133,15 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 		polar_result_dict[ csv_result_keys[i].replace('_x','') ] = convert2Polar( csv_result_dict[ csv_result_keys[i] ], csv_result_dict[ csv_result_keys[i+1] ] )
 		i = i + 3
 
+	MAGNITUDE = 0
+	ANGLE = 1
+
 	polar_result_path = o_result_path.replace('.csv','_polar.json')
 	process_output_dict['polar_result_path'] = polar_result_path
 	polar_result_processed_dict = {}
 	for key in polar_result_dict.keys():
-		polar_result_processed_dict[key] = polar_result_dict[key][0].tolist()
+		polar_result_processed_dict[key]['r'] = polar_result_dict[key][MAGNITUDE].tolist()
+		polar_result_processed_dict[key]['theta'] = polar_result_dict[key][ANGLE].tolist()
 
 	try:
 		with open(polar_result_path, 'w') as out_file:
@@ -148,8 +152,6 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 
 	polar_keys = list( polar_result_dict.keys() )
 
-	MAGNITUDE = 0
-	ANGLE = 1
 
 	counter_data_dict = {}
 	for key in polar_keys:
