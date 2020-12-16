@@ -140,6 +140,7 @@ def process_video( config_file_ia, video_path_ia, joints_info_ia, output_video_b
 	process_output_dict['polar_result_path'] = polar_result_path
 	polar_result_processed_dict = {}
 	for key in polar_result_dict.keys():
+		polar_result_processed_dict[key] = {}
 		polar_result_processed_dict[key]['r'] = polar_result_dict[key][MAGNITUDE].tolist()
 		polar_result_processed_dict[key]['theta'] = polar_result_dict[key][ANGLE].tolist()
 
